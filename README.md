@@ -1,17 +1,10 @@
 # BUSINESS MESSAGES: Kitchen Sink Bot
 
 This sample demonstrates how to receive a message from the [Business Messages](https://developers.google.com/business-communications/business-messages/reference/rest)
-platform and echo the same message back to the user using the
-[Business Messages Java client library](https://github.com/google-business-communications/java-businessmessages).
-
-The sample also supports the following commands:
-* `card` - The bot responds with a sample rich card
-* `carousel` - The bot responds with a sample carousel
-* `chips` - The bot responds with sample suggested replies
-
-This sample demonstrates how to receive a message from the [Business Messages](https://developers.google.com/business-communications/business-messages/reference/rest)
 platform and echo the same message back to the user using the [Business Messages Java client library](https://github.com/google-business-communications/java-businessmessages). The bot also includes commands to generate all message types supported
 in Business Messages and receive all user generated message types.
+
+Enter `help` to see a  list of supported commands.
 
 This sample runs on the Google App Engine.
 

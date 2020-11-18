@@ -111,6 +111,12 @@ public class KitchenSinkBot {
       sendLiveAgentAction(conversationId);
     } else if (normalizedMessage.matches(BotConstants.CMD_CHIPS)) {
       sendChipExamples(conversationId);
+    } else if (normalizedMessage.matches(BotConstants.CMD_BOLD)) {
+      sendRichResponse("**" + BotConstants.RSP_LOREM_IPSUM + "**", conversationId);
+    } else if (normalizedMessage.matches(BotConstants.CMD_ITALICS)) {
+      sendRichResponse("*" + BotConstants.RSP_LOREM_IPSUM + "*", conversationId);
+    }  else if (normalizedMessage.matches(BotConstants.CMD_HYPERLINK)) {
+      sendRichResponse(BotConstants.RSP_HYPERLINK_TEXT, conversationId);
     } else { // Echo received message
       sendResponse(message, conversationId);
     }
@@ -528,6 +534,29 @@ public class KitchenSinkBot {
       noLanguageMatch += sb.toString();
 
       sendResponse(noLanguageMatch, conversationId);
+    }
+  }
+
+  /**
+   * Posts a message to the Business Messages API with the contains rich text
+   * flag set to true. This will make it so the markdown expressions for bold,
+   * italics, and linkified text will render correctly.
+   *
+   * @param message The message text to send the user.
+   * @param conversationId The conversation ID that uniquely maps to the user and agent.
+   */
+  private void sendRichResponse(String message, String conversationId) {
+    try {
+      // Send plaintext message with default menu to user
+      sendResponse(new BusinessMessagesMessage()
+          .setMessageId(UUID.randomUUID().toString())
+          .setText(message)
+          .setContainsRichText(true)
+          .setRepresentative(representative)
+          .setFallback(message)
+          .setSuggestions(getDefaultMenu()), conversationId);
+    } catch (Exception e) {
+      logger.log(Level.SEVERE, EXCEPTION_WAS_THROWN, e);
     }
   }
 

@@ -154,6 +154,9 @@ public interface BotConstants {
   String CMD_CSAT_TRIGGER = "csat.*";
   String CMD_LIVE_AGENT = "live agent";
   String CMD_CHIPS = "chips";
+  String CMD_BOLD = "bold";
+  String CMD_ITALICS = "italics";
+  String CMD_HYPERLINK = "hyperlink";
 
   // List of pre-programmed responses
   String RSP_LOREM_IPSUM = "Lorem ipsum dolor sit amet, consectetur " +
@@ -212,6 +215,8 @@ public interface BotConstants {
 
   String RSP_LINK_TEXT = "Go to Google!";
 
+  String RSP_HYPERLINK_TEXT = "Go to [Google](https://www.google.com)";
+
   String RSP_CHIP_TEXT = "Example suggested replies";
 
   String RSP_LIVE_AGENT_TEXT = "Example a live agent request action";
@@ -237,7 +242,10 @@ public interface BotConstants {
       "Live agent - Shows an Request a live agent chip\n\n" +
       "Chips - Shows an example chip list\n\n" +
       "Card - Shows a sample rich card\n\n" +
-      "Carousel - Shows a sample carousel rich card";
+      "Carousel - Shows a sample carousel rich card\n\n" +
+      "Bold - Shows text with bolding\n\n" +
+      "Italics - Shows text with italics\n\n" +
+      "Hyperlink - Hyperlinks text within a message";
 
   String RSP_LIVE_AGENT_TRANSFER = "Hey there, you are now chatting with a live agent " +
       "(not really, but let's pretend).";

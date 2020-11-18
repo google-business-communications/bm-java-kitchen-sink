@@ -65,7 +65,7 @@ limitations under the License.
         <dependency>
             <groupId>com.google.apis</groupId>
             <artifactId>google-api-services-businessmessages</artifactId>
-            <version>1.25.0</version>
+            <version>1.25.1</version>
         </dependency>
 
         <dependency>
