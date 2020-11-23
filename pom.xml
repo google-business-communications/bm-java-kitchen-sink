@@ -37,14 +37,6 @@ limitations under the License.
     </properties>
     <!-- [END properties] -->
 
-    <repositories>
-        <repository>
-            <id>in-project</id>
-            <name>In Project Repo</name>
-            <url>file:///${project.basedir}/lib</url>
-        </repository>
-    </repositories>
-
     <dependencies>
         <!-- App Engine SDK dependency : only required if you need to explicitly use App Engine API -->
         <dependency>
@@ -65,7 +57,7 @@ limitations under the License.
         <dependency>
             <groupId>com.google.apis</groupId>
             <artifactId>google-api-services-businessmessages</artifactId>
-            <version>1.25.1</version>
+            <version>1.25.2</version>
         </dependency>
 
         <dependency>
