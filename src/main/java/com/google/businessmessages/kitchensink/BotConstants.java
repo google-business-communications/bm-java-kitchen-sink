@@ -157,6 +157,7 @@ public interface BotConstants {
   String CMD_BOLD = "bold";
   String CMD_ITALICS = "italics";
   String CMD_HYPERLINK = "hyperlink";
+  String CMD_IMAGE = "image";
 
   // List of pre-programmed responses
   String RSP_LOREM_IPSUM = "Lorem ipsum dolor sit amet, consectetur " +
@@ -245,7 +246,8 @@ public interface BotConstants {
       "Carousel - Shows a sample carousel rich card\n\n" +
       "Bold - Shows text with bolding\n\n" +
       "Italics - Shows text with italics\n\n" +
-      "Hyperlink - Hyperlinks text within a message";
+      "Hyperlink - Hyperlinks text within a message\n\n" +
+      "Image - Shows an image";
 
   String RSP_LIVE_AGENT_TRANSFER = "Hey there, you are now chatting with a live agent " +
       "(not really, but let's pretend).";
