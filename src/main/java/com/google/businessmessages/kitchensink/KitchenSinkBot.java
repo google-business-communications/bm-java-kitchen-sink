@@ -14,18 +14,20 @@
 package com.google.businessmessages.kitchensink;
 
 // [START import_libraries]
-
+import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
+import com.google.api.client.http.HttpBackOffUnsuccessfulResponseHandler;
+import com.google.api.client.http.HttpRequest;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.util.ExponentialBackOff;
 import com.google.api.services.businessmessages.v1.Businessmessages;
 import com.google.api.services.businessmessages.v1.model.BusinessMessagesCardContent;
 import com.google.api.services.businessmessages.v1.model.BusinessMessagesCarouselCard;
 import com.google.api.services.businessmessages.v1.model.BusinessMessagesContentInfo;
 import com.google.api.services.businessmessages.v1.model.BusinessMessagesDialAction;
 import com.google.api.services.businessmessages.v1.model.BusinessMessagesEvent;
-import com.google.api.services.businessmessages.v1.model.BusinessMessagesImage;
 import com.google.api.services.businessmessages.v1.model.BusinessMessagesLiveAgentRequest;
 import com.google.api.services.businessmessages.v1.model.BusinessMessagesMedia;
 import com.google.api.services.businessmessages.v1.model.BusinessMessagesMessage;
@@ -118,8 +120,6 @@ public class KitchenSinkBot {
       sendRichResponse("*" + BotConstants.RSP_LOREM_IPSUM + "*", conversationId);
     }  else if (normalizedMessage.matches(BotConstants.CMD_HYPERLINK)) {
       sendRichResponse(BotConstants.RSP_HYPERLINK_TEXT, conversationId);
-    }  else if (normalizedMessage.matches(BotConstants.CMD_IMAGE)) {
-      sendImageExample(conversationId);
     } else { // Echo received message
       sendResponse(message, conversationId);
     }
@@ -351,28 +351,6 @@ public class KitchenSinkBot {
           .setText(BotConstants.RSP_DIAL_TEXT)
           .setRepresentative(representative)
           .setSuggestions(suggestions), conversationId);
-    } catch (Exception e) {
-      logger.log(Level.SEVERE, EXCEPTION_WAS_THROWN, e);
-    }
-  }
-
-  /**
-   * Sends a sample image to the user.
-   *
-   * @param conversationId The conversation ID that uniquely maps to the user and agent.
-   */
-  private void sendImageExample(String conversationId) {
-
-    try {
-      sendResponse(new BusinessMessagesMessage()
-        .setMessageId(UUID.randomUUID().toString())
-        .setRepresentative(representative)
-        .setImage(new BusinessMessagesImage()
-          .setContentInfo(
-            new BusinessMessagesContentInfo()
-              .setFileUrl(BotConstants.SAMPLE_IMAGES[0])
-            ))
-        , conversationId);
     } catch (Exception e) {
       logger.log(Level.SEVERE, EXCEPTION_WAS_THROWN, e);
     }
@@ -635,7 +613,15 @@ public class KitchenSinkBot {
           = builder.build().conversations().messages()
           .create("conversations/" + conversationId, message);
 
-      messageRequest.execute();
+      // Setup retries with exponential backoff
+      HttpRequest httpRequest =
+          ((AbstractGoogleClientRequest) messageRequest).buildHttpRequest();
+
+      httpRequest.setUnsuccessfulResponseHandler(new
+          HttpBackOffUnsuccessfulResponseHandler(
+          new ExponentialBackOff()));
+
+      httpRequest.execute();
 
       // Stop typing indicator
       event =
