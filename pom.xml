@@ -79,7 +79,7 @@ limitations under the License.
         <dependency>
             <groupId>com.google.oauth-client</groupId>
             <artifactId>google-oauth-client</artifactId>
-            <version>1.23.0</version>
+            <version>1.33.3</version>
         </dependency>
         <dependency>
             <groupId>com.google.api-client</groupId>
